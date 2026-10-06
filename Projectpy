@@ -1,0 +1,21 @@
+DEVICES = ["Living Light", "Fan", "AC", "Fridge", "Camera", "Lock", "Heater", "Garage"]
+panel = 0
+
+while True:
+    print(f"\n[ Panel State: {panel:08b} (Decimal: {panel}) ]")
+    for i, dev in enumerate(DEVICES):
+        print(f"Bit {i} | {dev:<12}: {'ON' if (panel >> i) & 1 else 'OFF'}")
+    
+    print("\nOptions: 1. Turn ON  2. Turn OFF  3. Toggle  4. Reset  5. Exit")
+    cmd = input("Select action (1-5): ").strip()
+    
+    if cmd == '5': break
+    if cmd == '4': panel = 0; continue
+    
+    if cmd in ['1', '2', '3']:
+        bit = int(input("Enter bit position (0-7): "))
+        mask = 1 << bit
+        
+        if cmd == '1': panel |= mask       # Set Bit
+        if cmd == '2': panel &= ~mask      # Clear Bit
+        if cmd == '3': panel ^= mask       # Toggle Bit
